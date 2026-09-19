@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Ameath Desktop Pet
+Name[zh_CN]=Ameath 桌面宠物
+Comment=Animated Ameath desktop companion
+Comment[zh_CN]=Ameath 动画 Linux 桌宠
+Exec=ameath-linux
+Icon=ameath-linux
+Terminal=false
+Categories=Utility;Amusement;
+StartupNotify=false
+

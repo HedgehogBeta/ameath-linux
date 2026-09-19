@@ -1,0 +1,13 @@
+This project is an unofficial Linux port of Ameath.
+
+Upstream project: https://gitee.com/lzy-buaa-jdi/ameath
+Upstream version used as the porting baseline: v1.1.9
+Upstream copyright: Copyright (c) 2026 sinlatansen
+License: MIT (see LICENSE)
+
+The GIF, icon, font, voice and music files under ameath_linux/assets are
+redistributed from the upstream project. They are intentionally kept unchanged.
+The upstream README credits the GIF artwork to Bilibili creator @_BLZ_.
+
+This notice does not imply endorsement by or an official relationship with the
+upstream author or the credited artists.
