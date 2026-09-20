@@ -1,5 +1,4 @@
-include LICENSE SOURCE-LICENSE README.md requirements.txt version.txt
+include LICENSE SOURCE-LICENSE README.md requirements.txt
 include install.sh run.sh
 recursive-include packaging *
 recursive-include ameath_linux/assets *
-

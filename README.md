@@ -13,7 +13,7 @@
 ## 功能
 
 - 游荡、鼠标跟随、近距离好奇和随机休息状态机
-- 惯性移动、边缘反弹/离场重生、左右移动动画
+- 惯性移动、边缘平滑反弹和左右移动动画
 - 移动、待机、拖拽、暂停和窗口贴靠动画
 - 0.1x–2.0x 缩放、10%–100% 透明度、1–80 个桌宠实例
 - 鼠标穿透、始终置顶、全屏时隐藏和桌面底层模式
@@ -36,7 +36,7 @@ Wayland 不允许普通应用全局读取其他窗口，因此窗口贴靠和全
 从 GitHub Releases 下载 `.deb` 后安装：
 
 ```bash
-sudo apt install ./ameath-linux_1.1.9.2_all.deb
+sudo apt install ./ameath-linux_1.1.9.3_all.deb
 ameath-linux
 ```
 
@@ -45,7 +45,7 @@ ameath-linux
 需要 Python 3.10+、PyQt5 和 GStreamer。Ubuntu/Debian 可安装：
 
 ```bash
-sudo apt install python3-pyqt5 python3-gi gir1.2-gstreamer-1.0 gstreamer1.0-plugins-good
+sudo apt install python3-pyqt5 python3-gi gir1.2-gstreamer-1.0 gstreamer1.0-plugins-good x11-utils
 ```
 
 然后运行：

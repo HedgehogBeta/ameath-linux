@@ -3,8 +3,7 @@ set -euo pipefail
 
 PROJECT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 OUTPUT_DIR="${1:-$PROJECT_DIR/release}"
-VERSION="$(tr -d '[:space:]' < "$PROJECT_DIR/version.txt")"
-VERSION="${VERSION#v}"
+VERSION="$(PYTHONPATH="$PROJECT_DIR" python3 -c 'from ameath_linux import __version__; print(__version__)')"
 PACKAGE_FILE="$OUTPUT_DIR/ameath-linux_${VERSION}_all.deb"
 STAGE_DIR="$(mktemp -d)"
 
@@ -50,7 +49,7 @@ Section: games
 Priority: optional
 Architecture: all
 Installed-Size: $INSTALLED_SIZE
-Depends: python3 (>= 3.10), python3-pyqt5, python3-gi, gir1.2-gstreamer-1.0, gstreamer1.0-plugins-good
+Depends: python3 (>= 3.10), python3-pyqt5, python3-gi, gir1.2-gstreamer-1.0, gstreamer1.0-plugins-good, x11-utils
 Maintainer: HedgehogBeta <236519605+HedgehogBeta@users.noreply.github.com>
 Homepage: https://github.com/HedgehogBeta/ameath-linux
 Description: Ameath animated desktop pet for Linux

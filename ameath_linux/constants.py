@@ -10,7 +10,6 @@ SPEED_Y = 2.0
 STOP_CHANCE = 0.003
 STOP_DURATION_MIN = 4000
 STOP_DURATION_MAX = 8000
-EDGE_ESCAPE_CHANCE = 0.3
 RESPAWN_MARGIN = 50
 TARGET_CHANGE_MIN = 200
 TARGET_CHANGE_MAX = 500
@@ -45,3 +44,4 @@ GITHUB_RELEASES_URL = "https://github.com/HedgehogBeta/ameath-linux/releases"
 GITHUB_RELEASE_API = (
     "https://api.github.com/repos/HedgehogBeta/ameath-linux/releases/latest"
 )
+UPSTREAM_PROJECT_URL = "https://gitee.com/lzy-buaa-jdi/ameath"

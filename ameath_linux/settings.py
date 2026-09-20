@@ -9,7 +9,12 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 from . import __version__
 from .config import is_auto_startup_enabled, save_config
-from .constants import GITEE_RELEASES_URL, SCALE_OPTIONS, TRANSPARENCY_OPTIONS
+from .constants import (
+    GITHUB_RELEASES_URL,
+    SCALE_OPTIONS,
+    TRANSPARENCY_OPTIONS,
+    UPSTREAM_PROJECT_URL,
+)
 from .paths import MUSIC_DIR, asset_path
 from .platform_linux import is_wayland, open_path
 from .update import ReleaseInfo, check_latest, is_newer
@@ -301,7 +306,7 @@ class SettingsDialog(QtWidgets.QDialog):
         font.setBold(True)
         title.setFont(font)
         layout.addWidget(title)
-        self.update_status = QtWidgets.QLabel("点击按钮检查 Gitee 发布页")
+        self.update_status = QtWidgets.QLabel("点击按钮检查 GitHub 发布页")
         layout.addWidget(self.update_status)
         self.update_notes = QtWidgets.QTextEdit()
         self.update_notes.setReadOnly(True)
@@ -340,14 +345,14 @@ class SettingsDialog(QtWidgets.QDialog):
         assert isinstance(result, ReleaseInfo)
         newer = is_newer(result.version, __version__)
         self.update_status.setText(
-            f"发现新版本 {result.version}" if newer else f"已是最新版本（上游 {result.version}）"
+            f"发现新版本 {result.version}" if newer else f"已是最新版本（{result.version}）"
         )
         self.update_notes.setPlainText(result.notes)
         self.open_release_button.setEnabled(True)
 
     def _open_release(self) -> None:
-        url = self.latest_release.asset_url if self.latest_release else GITEE_RELEASES_URL
-        webbrowser.open(url or GITEE_RELEASES_URL)
+        url = self.latest_release.page_url if self.latest_release else GITHUB_RELEASES_URL
+        webbrowser.open(url or GITHUB_RELEASES_URL)
 
     def _about_tab(self) -> QtWidgets.QWidget:
         widget = QtWidgets.QWidget()
@@ -374,9 +379,8 @@ class SettingsDialog(QtWidgets.QDialog):
         text.setAlignment(QtCore.Qt.AlignCenter)
         text.setWordWrap(True)
         layout.addWidget(text)
-        link = QtWidgets.QPushButton("打开上游项目发布页")
-        link.clicked.connect(lambda: webbrowser.open(GITEE_RELEASES_URL))
+        link = QtWidgets.QPushButton("打开上游项目")
+        link.clicked.connect(lambda: webbrowser.open(UPSTREAM_PROJECT_URL))
         layout.addWidget(link, alignment=QtCore.Qt.AlignCenter)
         layout.addStretch()
         return widget
-

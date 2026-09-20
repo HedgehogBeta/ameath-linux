@@ -2,8 +2,7 @@
 set -euo pipefail
 
 PROJECT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
-VERSION="$(tr -d '[:space:]' < "$PROJECT_DIR/version.txt")"
-VERSION="${VERSION#v}"
+VERSION="$(PYTHONPATH="$PROJECT_DIR" python3 -c 'from ameath_linux import __version__; print(__version__)')"
 OUTPUT_DIR="$PROJECT_DIR/release"
 STAGE_DIR="$(mktemp -d)"
 PYTHON_DIST="$STAGE_DIR/python-dist"
@@ -43,7 +42,6 @@ cp \
     "$PROJECT_DIR/setup.cfg" \
     "$PROJECT_DIR/setup.py" \
     "$PROJECT_DIR/MANIFEST.in" \
-    "$PROJECT_DIR/version.txt" \
     "$PROJECT_DIR/README.md" \
     "$PROJECT_DIR/LICENSE" \
     "$PROJECT_DIR/SOURCE-LICENSE" \

@@ -12,7 +12,6 @@ from .constants import (
     DISPLAY_ALWAYS_TOP,
     DISPLAY_DESKTOP_ONLY,
     DISPLAY_HIDE_FULLSCREEN,
-    EDGE_ESCAPE_CHANCE,
     FOLLOW_DISTANCE,
     FOLLOW_START_DIST,
     FOLLOW_STOP_DIST,
@@ -211,24 +210,6 @@ class PetWidget(QtWidgets.QWidget):
             return random.randint(rect.left(), max_x), rect.bottom() + margin
         return random.randint(rect.left(), max_x), random.randint(rect.top(), max_y)
 
-    def _respawn(self) -> None:
-        rect = self._activity_rect()
-        max_x = max(rect.left(), rect.right() - self.width() + 1)
-        max_y = max(rect.top(), rect.bottom() - self.height() + 1)
-        side = random.choice(("left", "right", "top", "bottom"))
-        if side == "left":
-            self.x, self.y = rect.left() - RESPAWN_MARGIN, random.randint(rect.top(), max_y)
-        elif side == "right":
-            self.x, self.y = rect.right() + RESPAWN_MARGIN, random.randint(rect.top(), max_y)
-        elif side == "top":
-            self.x, self.y = random.randint(rect.left(), max_x), rect.top() - RESPAWN_MARGIN
-        else:
-            self.x, self.y = random.randint(rect.left(), max_x), rect.bottom() + RESPAWN_MARGIN
-        center_x = rect.center().x()
-        center_y = rect.center().y()
-        self.vx = 3 if self.x < center_x else -3
-        self.vy = 2 if self.y < center_y else -2
-
     def _handle_edge(self) -> None:
         rect = self._activity_rect()
         max_x = max(rect.left(), rect.right() - self.width() + 1)
@@ -236,15 +217,15 @@ class PetWidget(QtWidgets.QWidget):
         escaped = self.x < rect.left() or self.x > max_x or self.y < rect.top() or self.y > max_y
         if not escaped:
             return
-        if random.random() < EDGE_ESCAPE_CHANCE:
-            self._respawn()
-            return
         if self.x < rect.left() or self.x > max_x:
             self.vx = -self.vx
         if self.y < rect.top() or self.y > max_y:
             self.vy = -self.vy
         self.x = min(max(self.x, rect.left()), max_x)
         self.y = min(max(self.y, rect.top()), max_y)
+        self.target_x = random.randint(rect.left(), max_x)
+        self.target_y = random.randint(rect.top(), max_y)
+        self.target_timer = random.randint(TARGET_CHANGE_MIN, TARGET_CHANGE_MAX)
 
     def _move_tick(self) -> None:
         if self.dragging:
@@ -514,4 +495,3 @@ class PetWidget(QtWidgets.QWidget):
         self.visibility_timer.stop()
         self.pause_animation_timer.stop()
         super().closeEvent(event)
-
