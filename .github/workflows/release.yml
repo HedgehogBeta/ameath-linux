@@ -1,12 +1,12 @@
-name: Release
+name: Ameath Linux Release
 
 on:
   push:
-    tags: ["v*"]
+    tags: ["ameath-linux-v*"]
   workflow_dispatch:
     inputs:
       tag:
-        description: Existing version tag to publish
+        description: Existing Ameath Linux tag (ameath-linux-v*) to publish
         required: true
 
 permissions:
@@ -15,8 +15,13 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: 01-ameath-linux
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref }}
       - uses: actions/setup-python@v5
         with:
           python-version: "3.10"
@@ -26,4 +31,4 @@ jobs:
         with:
           generate_release_notes: true
           tag_name: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
-          files: release/*
+          files: 01-ameath-linux/release/*

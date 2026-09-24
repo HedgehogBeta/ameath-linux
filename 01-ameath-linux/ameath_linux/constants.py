@@ -40,8 +40,8 @@ DISPLAY_ALWAYS_TOP = 1
 DISPLAY_HIDE_FULLSCREEN = 2
 DISPLAY_DESKTOP_ONLY = 3
 
-GITHUB_RELEASES_URL = "https://github.com/HedgehogBeta/ameath-linux/releases"
+GITHUB_RELEASES_URL = "https://github.com/HedgehogBeta/Bue_Toolbox/releases"
 GITHUB_RELEASE_API = (
-    "https://api.github.com/repos/HedgehogBeta/ameath-linux/releases/latest"
+    "https://api.github.com/repos/HedgehogBeta/Bue_Toolbox/releases?per_page=100"
 )
 UPSTREAM_PROJECT_URL = "https://gitee.com/lzy-buaa-jdi/ameath"

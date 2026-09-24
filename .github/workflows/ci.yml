@@ -1,9 +1,15 @@
-name: CI
+name: Ameath Linux CI
 
 on:
   push:
     branches: [main]
+    paths:
+      - "01-ameath-linux/**"
+      - ".github/workflows/ci.yml"
   pull_request:
+    paths:
+      - "01-ameath-linux/**"
+      - ".github/workflows/ci.yml"
 
 permissions:
   contents: read
@@ -11,6 +17,9 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: 01-ameath-linux
     strategy:
       matrix:
         python-version: ["3.10", "3.12"]
@@ -28,6 +37,9 @@ jobs:
   package:
     needs: test
     runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: 01-ameath-linux
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

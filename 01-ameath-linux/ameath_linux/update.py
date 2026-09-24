@@ -36,7 +36,26 @@ def check_latest(timeout: float = 8.0) -> ReleaseInfo:
     )
     with urllib.request.urlopen(request, timeout=timeout) as response:
         payload = json.load(response)
-    assets = payload.get("assets") or []
+    if not isinstance(payload, list):
+        raise ValueError("GitHub 发布列表格式无效")
+    releases = (
+        item for item in payload
+        if isinstance(item, dict)
+        and not item.get("draft")
+        and not item.get("prerelease")
+        and re.fullmatch(
+            r"(?:ameath-linux-)?v\d+(?:\.\d+)+",
+            str(item.get("tag_name") or ""),
+        )
+    )
+    release = max(
+        releases,
+        key=lambda item: normalized_version(str(item["tag_name"])),
+        default=None,
+    )
+    if release is None:
+        raise ValueError("未找到 Ameath Linux 的正式版本")
+    assets = release.get("assets") or []
     preferred = None
     for item in assets:
         name = str(item.get("name", ""))
@@ -48,9 +67,9 @@ def check_latest(timeout: float = 8.0) -> ReleaseInfo:
             if lower.endswith(".appimage"):
                 break
     return ReleaseInfo(
-        version=str(payload.get("tag_name") or payload.get("name") or "unknown"),
-        notes=str(payload.get("body") or "暂无发布说明"),
-        page_url=str(payload.get("html_url") or GITHUB_RELEASES_URL),
+        version=str(release["tag_name"]).removeprefix("ameath-linux-"),
+        notes=str(release.get("body") or "暂无发布说明"),
+        page_url=str(release.get("html_url") or GITHUB_RELEASES_URL),
         asset_url=(preferred or {}).get("browser_download_url"),
         asset_name=(preferred or {}).get("name"),
     )

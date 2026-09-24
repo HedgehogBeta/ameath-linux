@@ -51,7 +51,7 @@ Architecture: all
 Installed-Size: $INSTALLED_SIZE
 Depends: python3 (>= 3.10), python3-pyqt5, python3-gi, gir1.2-gstreamer-1.0, gstreamer1.0-plugins-good, x11-utils
 Maintainer: HedgehogBeta <236519605+HedgehogBeta@users.noreply.github.com>
-Homepage: https://github.com/HedgehogBeta/ameath-linux
+Homepage: https://github.com/HedgehogBeta/Bue_Toolbox/tree/main/01-ameath-linux
 Description: Ameath animated desktop pet for Linux
  An unofficial Linux port of Ameath with desktop wandering, tray controls,
  multiple pets, audio playback, startup integration and X11-aware behavior.
